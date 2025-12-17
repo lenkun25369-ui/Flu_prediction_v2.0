@@ -49,8 +49,16 @@ def num_input(label, minv, maxv, default, step=1.0, key=None):
 def yn(label, key):
     options = ["No", "Yes"]
     idx = 0
+
     if patient_data and key in patient_data:
-        idx = options.index(patient_data[key])
+        v = patient_data[key]
+
+        # 🔒 最小修正：支援 0/1 or "No"/"Yes"
+        if isinstance(v, int):
+            idx = 1 if v == 1 else 0
+        elif isinstance(v, str):
+            idx = options.index(v)
+
     return st.selectbox(label, options, index=idx)
 
 # =================================================
