@@ -37,6 +37,13 @@ def num_input(label, minv, maxv, default, step=1.0, key=None):
     value = default
     if patient_data and key in patient_data:
         value = patient_data[key]
+
+    # 🔒 關鍵：型別對齊（Streamlit 要求）
+    if isinstance(minv, float):
+        value = float(value)
+    else:
+        value = int(value)
+
     return st.number_input(label, minv, maxv, value, step=step)
 
 def yn(label, key):
